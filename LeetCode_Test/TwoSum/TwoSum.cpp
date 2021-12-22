@@ -1,11 +1,11 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <unordered_map>
 
 using std::vector;
-using std::cout;
-using std::endl;
 using vi = vector<int>;
+using iimap = std::unordered_map<int, int>;
 
 class Solution
 {
@@ -29,18 +29,20 @@ public:
             if (isArgOK(nums[i]) == false)
                 return result;
 
-        // TODO : Refactoring Code less than O(n^2)
-        for (int i = 0; i < length - 1; ++i)
+        iimap prevHash;
+
+        for (int i = 0; i < length; ++i)
         {
-            for (int j = i + 1; j < length; ++j)
+            auto iter = prevHash.find(target - nums[i]);
+
+            if (iter != prevHash.end())
             {
-                if (nums[i] + nums[j] == target)
-                {
-                    result.push_back(i);
-                    result.push_back(j);
-                    return result;
-                }
+                result.push_back(iter->second);
+                result.push_back(i);
+                return result;
             }
+
+            prevHash.insert(std::make_pair(nums[i], i));
         }
 
         return result;
@@ -50,6 +52,9 @@ public:
 
 void main()
 {
+    using std::cout;
+    using std::endl;
+
     vi arr{ 2, 7, 11, 15, 26 };
     int target = 9;
 
