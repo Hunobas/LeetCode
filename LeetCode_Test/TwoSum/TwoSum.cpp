@@ -30,7 +30,7 @@ public:
                 return result;
 
         // TODO : Refactoring Code less than O(n^2)
-        for (int i = 0; i < length; ++i)
+        for (int i = 0; i < length - 1; ++i)
         {
             for (int j = i + 1; j < length; ++j)
             {
@@ -38,6 +38,7 @@ public:
                 {
                     result.push_back(i);
                     result.push_back(j);
+                    return result;
                 }
             }
         }
