@@ -5,6 +5,7 @@
 using std::vector;
 using std::cout;
 using std::endl;
+using vi = vector<int>;
 
 class Solution
 {
@@ -17,7 +18,7 @@ public:
     vector<int> twoSum(vector<int>& nums, int target)
     {
         int length = nums.size();
-        vector<int> result;
+        vi result;
         result.reserve(10);
 
         if (length < 2 && length > pow(10, 4))
@@ -48,12 +49,12 @@ public:
 
 void main()
 {
-    vector<int> arr{ 2, 7, 11, 15, 26 };
+    vi arr{ 2, 7, 11, 15, 26 };
     int target = 9;
 
     Solution sol;
 
-    vector<int> answer = sol.twoSum(arr, target);
+    vi answer = sol.twoSum(arr, target);
 
     cout << "[ ";
     for (auto e : answer)
