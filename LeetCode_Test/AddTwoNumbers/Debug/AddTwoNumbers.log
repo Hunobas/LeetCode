@@ -1,4 +1,2 @@
 ﻿  AddTwoNumbers.cpp
-D:\Program Files\Git\LeetCode\LeetCode_Test\AddTwoNumbers\AddTwoNumbers.cpp(77,1): warning C4144: '>': relational expression as switch expression
-D:\Program Files\Git\LeetCode\LeetCode_Test\AddTwoNumbers\AddTwoNumbers.cpp(95,1): warning C4144: '>': relational expression as switch expression
   AddTwoNumbers.vcxproj -> D:\Program Files\Git\LeetCode\LeetCode_Test\Debug\AddTwoNumbers.exe

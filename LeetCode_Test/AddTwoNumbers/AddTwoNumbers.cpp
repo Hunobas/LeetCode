@@ -55,56 +55,20 @@ public:
         ListNode* l1Curr = l1;
         ListNode* l2Curr = l2;
         vector<int> resultVec;
-        bool isOverFlow = false;
+        int carry = 0;
         auto areTwoNullptr = [](ListNode* l1, ListNode* l2) { return l1 == nullptr && l2 == nullptr; };
 
         resultVec.reserve(maxCount + 2);
 
         while (!areTwoNullptr(l1Curr, l2Curr))
         {
-            int sum = getValOrZero(l1Curr) + getValOrZero(l2Curr);
+            int sum = getValOrZero(l1Curr) + getValOrZero(l2Curr) + carry;
+            carry = sum / 10;
+            sum %= 10;
+            resultVec.push_back(sum);
 
-            switch (isOverFlow)
-            {
-            case true:
-                switch (sum > 8)
-                {
-                case true:
-                    resultVec.push_back(sum - 9);
-                    if (areTwoNullptr(getNext(l1Curr), getNext(l2Curr)))
-                    {
-                        resultVec.push_back(1);
-                        return makeListNode(resultVec);
-                    }
-                    isOverFlow = true;
-                    break;
-
-                case false:
-                    resultVec.push_back(sum + 1);
-                    isOverFlow = false;
-                    break;
-                }
-                break;
-
-            case false:
-                switch (sum > 9)
-                {
-                case true:
-                    resultVec.push_back(sum - 10);
-                    if (areTwoNullptr(getNext(l1Curr), getNext(l2Curr)))
-                    {
-                        resultVec.push_back(1);
-                        return makeListNode(resultVec);
-                    }
-                    isOverFlow = true;
-                    break;
-                case false:
-                    resultVec.push_back(sum);
-                    isOverFlow = false;
-                    break;
-                }
-                break;
-            }
+            if (carry && areTwoNullptr(getNext(l1Curr), getNext(l2Curr)))
+                resultVec.push_back(1);
 
             if (getNext(l1Curr) != nullptr)
                 l1Curr = l1Curr->next;
