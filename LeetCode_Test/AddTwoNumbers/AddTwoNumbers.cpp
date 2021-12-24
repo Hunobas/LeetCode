@@ -7,76 +7,23 @@ using namespace std;
 struct ListNode {
     int val;
     ListNode* next;
-    ListNode* head, * tail;
 
-    ListNode() : val(0), next(nullptr), head(nullptr), tail(nullptr) {}
-    ListNode(ListNode* node) : val(node->val), next(node->next), head(node->head), tail(node->tail) {}
-    ListNode(const int& x) { addNode(x); }
-    ListNode(const int& x, ListNode* _next) : val(x), next(_next), head(this), tail(_next) {}
-    ListNode(const vector<int>& vec)
-        : head(nullptr), tail(nullptr)
-    {
-        for (auto e : vec)
-        {
-            addNode(e);
-        }
-    }
-
-    ~ListNode()
-    {
-        ListNode* curr = head;
-        ListNode* next = nullptr;
-
-        while (curr)
-        {
-            next = curr->next;
-            delete curr;
-            curr = next;
-        }
-        head = nullptr;
-        tail = nullptr;
-    }
-
-    void addNode(const int& n)
-    {
-        if (n < 0 || n > 9)
-            return;
-
-        ListNode* temp = new ListNode;
-        temp->val = n;
-        temp->next = nullptr;
-
-        if (head == nullptr)
-        {
-            head = temp;
-            tail = temp;
-        }
-        else
-        {
-            tail->next = temp;
-            tail = tail->next;
-        }
-    }
-
-    void printListNodeVal()
-    {
-        ListNode* curr = head;
-
-        cout << "[ ";
-        while (curr != tail)
-        {
-            cout << curr->val << ", ";
-            curr = curr->next;
-        }
-        cout << tail->val << " ]\n";
-    }
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(const int& x) : val(x), next(nullptr) {}
+    ListNode(const int& x, ListNode* next) : val(x), next(next) {}
 };
 
 class Solution {
 public:
-    inline bool isContinue(ListNode* l1, ListNode* l2)
+    ListNode* makeListNode(const vector<int>& vec)
     {
-        return l1 == nullptr && l2 == nullptr;
+        ListNode* genesis = new ListNode(vec[vec.size() - 1]);
+        for (int i = vec.size() - 2; i >= 0; --i)
+        {
+            genesis = new ListNode(vec[i], genesis);
+        }
+
+        return genesis;
     }
 
     inline int getValOrZero(ListNode* node)
@@ -84,35 +31,42 @@ public:
         return node == nullptr ? 0 : node->val;
     }
 
-    inline int getCount(ListNode* l1)
+    inline int getCount(ListNode* listnode)
     {
         int count = 0;
-        ListNode* curr = nullptr;
-
-        for (curr = l1->head; curr != l1->tail; curr = curr->next)
+        
+        for (; listnode != nullptr; listnode = listnode->next)
         {
             count++;
         }
-        return ++count;
+        return count;
+    }
+
+    inline ListNode* getNext(ListNode*& listnode)
+    {
+        if (listnode == nullptr)
+            return nullptr;
+        return listnode->next;
     }
 
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
     {
         int maxCount = max(getCount(l1), getCount(l2));
 
-        if (l1->head == nullptr || l2->head == nullptr)
+        if (l1 == nullptr || l2 == nullptr)
             return nullptr;
         if (maxCount > 100)
             return nullptr;
 
-        ListNode* l1Curr = l1->head;
-        ListNode* l2Curr = l2->head;
+        ListNode* l1Curr = l1;
+        ListNode* l2Curr = l2;
         vector<int> resultVec;
         bool isOverFlow = false;
+        auto areTwoNullptr = [](ListNode* l1, ListNode* l2) { return l1 == nullptr && l2 == nullptr; };
 
         resultVec.reserve(maxCount + 2);
 
-        for (; !isContinue(l1Curr, l2Curr); l1Curr = l1Curr->next, l2Curr = l2Curr->next)
+        while (!areTwoNullptr(l1Curr, l2Curr))
         {
             int sum = getValOrZero(l1Curr) + getValOrZero(l2Curr);
 
@@ -123,10 +77,10 @@ public:
                 {
                 case true:
                     resultVec.push_back(sum - 9);
-                    if (isContinue(l1Curr->next, l2Curr->next))
+                    if (areTwoNullptr(getNext(l1Curr), getNext(l2Curr)))
                     {
                         resultVec.push_back(1);
-                        return new ListNode(resultVec);
+                        return makeListNode(resultVec);
                     }
                     isOverFlow = true;
                     break;
@@ -141,10 +95,11 @@ public:
                 {
                 case true:
                     resultVec.push_back(sum - 10);
-                    if (isContinue(l1Curr->next, l2Curr->next))
+                    if (areTwoNullptr(getNext(l1Curr), getNext(l2Curr)))
+
                     {
                         resultVec.push_back(1);
-                        return new ListNode(resultVec);
+                        return makeListNode(resultVec);
                     }
                     isOverFlow = true;
                     break;
@@ -155,27 +110,47 @@ public:
                 }
                 break;
             }
+
+            if (getNext(l1Curr) != nullptr)
+                l1Curr = l1Curr->next;
+            else
+                l1Curr = nullptr;
+
+            if (getNext(l2Curr) != nullptr)
+                l2Curr = l2Curr->next;
+            else
+                l2Curr = nullptr;
         }
         
-        return new ListNode(resultVec);
+        return makeListNode(resultVec);
+    }
+
+    void printListNodeVal(ListNode* listnode)
+    {
+        cout << "[ ";
+        for (; listnode != nullptr; listnode = listnode->next)
+        {
+            cout << listnode->val << ", ";
+        }
+        cout << " ]\n";
     }
 };
 
 int main()
 {
-    vector<int> vec1 = { 3, 5, 4, 3, 2, 6};
-    vector<int> vec2 = { 5, 6, 4, 2, 8, 8 };
-
-    ListNode* l1 = new ListNode(vec1);
-    ListNode* l2 = new ListNode(vec2);
-
-    l1->printListNodeVal();
-    l2->printListNodeVal();
-
+    vector<int> vec1 = { 9, 9, 9, 9, 9, 9 };
+    vector<int> vec2 = { 9, 9, 9, 9 };
+    
     Solution sol;
 
+    ListNode* l1 = sol.makeListNode(vec1);
+    ListNode* l2 = sol.makeListNode(vec2);
+
+    sol.printListNodeVal(l1);
+    sol.printListNodeVal(l2);
+
     ListNode* l3 = sol.addTwoNumbers(l1, l2);
-    l3->printListNodeVal();
+    sol.printListNodeVal(l3);
 
     return 0;
 }
