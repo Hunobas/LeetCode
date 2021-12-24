@@ -36,13 +36,6 @@ public:
         return count;
     }
 
-    inline ListNode* getNext(ListNode*& listnode)
-    {
-        if (listnode == nullptr)
-            return nullptr;
-        return listnode->next;
-    }
-
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
     {
         int maxCount = max(getCount(l1), getCount(l2));
@@ -52,33 +45,23 @@ public:
         if (maxCount > 100)
             return nullptr;
 
-        ListNode* l1Curr = l1;
-        ListNode* l2Curr = l2;
         vector<int> resultVec;
         int carry = 0;
-        auto areTwoNullptr = [](ListNode* l1, ListNode* l2) { return l1 == nullptr && l2 == nullptr; };
 
         resultVec.reserve(maxCount + 2);
 
-        while (!areTwoNullptr(l1Curr, l2Curr))
+        while (l1 || l2 || carry)
         {
-            int sum = getValOrZero(l1Curr) + getValOrZero(l2Curr) + carry;
+            int sum = getValOrZero(l1) + getValOrZero(l2) + carry;
             carry = sum / 10;
             sum %= 10;
             resultVec.push_back(sum);
 
-            if (carry && areTwoNullptr(getNext(l1Curr), getNext(l2Curr)))
-                resultVec.push_back(1);
+            if (l1)
+                l1 = l1->next;
 
-            if (getNext(l1Curr) != nullptr)
-                l1Curr = l1Curr->next;
-            else
-                l1Curr = nullptr;
-
-            if (getNext(l2Curr) != nullptr)
-                l2Curr = l2Curr->next;
-            else
-                l2Curr = nullptr;
+            if (l2)
+                l2 = l2->next;
         }
         
         return makeListNode(resultVec);
