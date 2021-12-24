@@ -23,11 +23,6 @@ public:
         return genesis;
     }
 
-    inline int getValOrZero(ListNode* node)
-    {
-        return node == nullptr ? 0 : node->val;
-    }
-
     inline int getCount(ListNode* listnode)
     {
         int count = 0;
@@ -52,7 +47,10 @@ public:
 
         while (l1 || l2 || carry)
         {
-            int sum = getValOrZero(l1) + getValOrZero(l2) + carry;
+            int val1 = l1 ? l1->val : 0;
+            int val2 = l2 ? l2->val : 0;
+
+            int sum = val1 + val2 + carry;
             carry = sum / 10;
             sum %= 10;
             resultVec.push_back(sum);
