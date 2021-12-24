@@ -4,22 +4,15 @@
 
 using namespace std;
 
-struct Node {
-    int val;
-    Node* next;
-
-    Node() : val(0), next(nullptr) {}
-    Node(int x) : val(x), next(nullptr) {}
-    Node(int x, Node* next) : val(x), next(next) {}
-    ~Node() { delete this; }
-};
-
 struct ListNode {
-    Node* head, * tail;
+    int val;
+    ListNode* next;
+    ListNode* head, * tail;
 
-    ListNode() : head(nullptr), tail(nullptr) {}
-    ListNode(Node* node) : head(node), tail(node) {}
-    ListNode(const int& n) : head(nullptr), tail(nullptr) { addNode(n); }
+    ListNode() : val(0), next(nullptr), head(nullptr), tail(nullptr) {}
+    ListNode(ListNode* node) : val(node->val), next(node->next), head(node->head), tail(node->tail) {}
+    ListNode(const int& x) { addNode(x); }
+    ListNode(const int& x, ListNode* _next) : val(x), next(_next), head(this), tail(_next) {}
     ListNode(const vector<int>& vec)
         : head(nullptr), tail(nullptr)
     {
@@ -31,8 +24,8 @@ struct ListNode {
 
     ~ListNode()
     {
-        Node* curr = head;
-        Node* next = nullptr;
+        ListNode* curr = head;
+        ListNode* next = nullptr;
 
         while (curr)
         {
@@ -49,7 +42,7 @@ struct ListNode {
         if (n < 0 || n > 9)
             return;
 
-        Node* temp = new Node;
+        ListNode* temp = new ListNode;
         temp->val = n;
         temp->next = nullptr;
 
@@ -67,7 +60,7 @@ struct ListNode {
 
     void printListNodeVal()
     {
-        Node* curr = head;
+        ListNode* curr = head;
 
         cout << "[ ";
         while (curr != tail)
@@ -81,12 +74,12 @@ struct ListNode {
 
 class Solution {
 public:
-    inline bool isContinue(Node* l1, Node* l2)
+    inline bool isContinue(ListNode* l1, ListNode* l2)
     {
         return l1 == nullptr && l2 == nullptr;
     }
 
-    inline int getValOrZero(Node* node)
+    inline int getValOrZero(ListNode* node)
     {
         return node == nullptr ? 0 : node->val;
     }
@@ -94,7 +87,7 @@ public:
     inline int getCount(ListNode* l1)
     {
         int count = 0;
-        Node* curr = nullptr;
+        ListNode* curr = nullptr;
 
         for (curr = l1->head; curr != l1->tail; curr = curr->next)
         {
@@ -112,8 +105,8 @@ public:
         if (maxCount > 100)
             return nullptr;
 
-        Node* l1Curr = l1->head;
-        Node* l2Curr = l2->head;
+        ListNode* l1Curr = l1->head;
+        ListNode* l2Curr = l2->head;
         vector<int> resultVec;
         bool isOverFlow = false;
 
