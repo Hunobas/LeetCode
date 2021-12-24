@@ -19,10 +19,7 @@ public:
     {
         ListNode* genesis = new ListNode(vec[vec.size() - 1]);
         for (int i = vec.size() - 2; i >= 0; --i)
-        {
             genesis = new ListNode(vec[i], genesis);
-        }
-
         return genesis;
     }
 
@@ -34,11 +31,8 @@ public:
     inline int getCount(ListNode* listnode)
     {
         int count = 0;
-        
         for (; listnode != nullptr; listnode = listnode->next)
-        {
             count++;
-        }
         return count;
     }
 
@@ -84,19 +78,20 @@ public:
                     }
                     isOverFlow = true;
                     break;
+
                 case false:
                     resultVec.push_back(sum + 1);
                     isOverFlow = false;
                     break;
                 }
                 break;
+
             case false:
                 switch (sum > 9)
                 {
                 case true:
                     resultVec.push_back(sum - 10);
                     if (areTwoNullptr(getNext(l1Curr), getNext(l2Curr)))
-
                     {
                         resultVec.push_back(1);
                         return makeListNode(resultVec);
