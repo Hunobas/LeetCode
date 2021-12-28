@@ -15,7 +15,12 @@
       "ProjectGuid": "289f00bd-b0bd-4e94-b5f0-67fb497ff2fd",
       "DisplayName": "AddTwoNumbers",
       "ColorIndex": 1
+    },
+    "a9a305c1-e0bf-4039-9a9f-065c20776208": {
+      "ProjectGuid": "a9a305c1-e0bf-4039-9a9f-065c20776208",
+      "DisplayName": "LongestSubstringWithoutRepeatingCharacters",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 3
 }
