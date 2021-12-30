@@ -20,7 +20,7 @@ public:
 
         resultVec.reserve(length);
 
-        for (int i = 0; i < length; ++i)
+        for (int i = 0; i < length - 1; ++i)
         {
             for (int j = i; j < length; ++j)
             {
