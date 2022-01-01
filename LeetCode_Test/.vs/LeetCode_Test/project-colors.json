@@ -30,7 +30,12 @@
       "ProjectGuid": "016eee08-8b8f-4dca-8c88-dbe119ad5f04",
       "DisplayName": "LongestPalindromicSubstring",
       "ColorIndex": 4
+    },
+    "e1202a31-db19-436c-862f-59379125285b": {
+      "ProjectGuid": "e1202a31-db19-436c-862f-59379125285b",
+      "DisplayName": "ZigzagConversion",
+      "ColorIndex": 5
     }
   },
-  "NextColorIndex": 5
+  "NextColorIndex": 6
 }
