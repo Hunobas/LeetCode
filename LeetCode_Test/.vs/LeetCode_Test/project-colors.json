@@ -25,7 +25,12 @@
       "ProjectGuid": "562e6a60-b8b2-48d0-88ab-aad29e355f1b",
       "DisplayName": "Median of Two Sorted Arrays",
       "ColorIndex": 3
+    },
+    "016eee08-8b8f-4dca-8c88-dbe119ad5f04": {
+      "ProjectGuid": "016eee08-8b8f-4dca-8c88-dbe119ad5f04",
+      "DisplayName": "LongestPalindromicSubstring",
+      "ColorIndex": 4
     }
   },
-  "NextColorIndex": 4
+  "NextColorIndex": 5
 }

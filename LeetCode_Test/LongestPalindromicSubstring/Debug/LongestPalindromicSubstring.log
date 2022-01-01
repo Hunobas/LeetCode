@@ -1,0 +1,3 @@
+﻿  LongestPalindromicSubstring.cpp
+D:\Program Files\Git\LeetCode\LeetCode_Test\LongestPalindromicSubstring\LongestPalindromicSubstring.cpp(24,27): warning C4018: '<': signed/unsigned mismatch
+  LongestPalindromicSubstring.vcxproj -> D:\Program Files\Git\LeetCode\LeetCode_Test\Debug\LongestPalindromicSubstring.exe
