@@ -1,74 +1,50 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <tuple>
 
 using std::string;
+using std::vector;
 using std::cout;
 using std::endl;
-using tcis = std::vector<std::tuple<char, int>>;
 
 class Solution {
 private:
-    tcis romanTable;
+    vector<string> sym{};
+    vector<int> val{};
 
 public:
     Solution()
     {
-        romanTable.push_back(std::make_tuple('I', 1));
-        romanTable.push_back(std::make_tuple('V', 5));
-        romanTable.push_back(std::make_tuple('X', 10));
-        romanTable.push_back(std::make_tuple('L', 50));
-        romanTable.push_back(std::make_tuple('C', 100));
-        romanTable.push_back(std::make_tuple('D', 500));
-        romanTable.push_back(std::make_tuple('M', 1000));
+        sym = { "M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I" };
+        val = { 1000,900,500,400,100,90,50,40,10,9,5,4,1 };
     }
 
     string intToRoman(int num) {
-        if (num < 1 || num > 3999)
-            return "";
 
-        string res = "";
+        string ans = "";
+        int i = -1;
 
-        for (int i = romanTable.size() - 1; i >= 0; --i)
+        while (num)
         {
-            int digit;
+            int q = num / val[++i];
 
-            if (i % 2)
+            if (q)
+                num = num % val[i];
+
+            while (q)
             {
-                digit = num / std::get<1>(romanTable[i - 1]);
-                if (digit == 9)
-                {
-                    res += std::get<0>(romanTable[i - 1]);
-                    res += std::get<0>(romanTable[i + 1]);
-                    num %= std::get<1>(romanTable[i - 1]);
-                    continue;
-                }
+                ans = ans + sym[i];
+                q--;
             }
-            digit = num / std::get<1>(romanTable[i]);
-
-            if (digit == 4)
-            {
-                res += std::get<0>(romanTable[i]);
-                res += std::get<0>(romanTable[i + 1]);
-                num %= std::get<1>(romanTable[i]);
-                continue;
-            }
-
-            while (digit-- != 0)
-                res += std::get<0>(romanTable[i]);
-
-            num %= std::get<1>(romanTable[i]);
         }
 
-        return res;
+        return ans;
     }
 };
 
 int main()
 {
-    int a = 3999;
+    int a = 3333;
     Solution sol;
-
     cout << sol.intToRoman(a) << endl;
 }
