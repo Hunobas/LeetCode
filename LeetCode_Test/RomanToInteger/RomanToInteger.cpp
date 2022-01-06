@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using std::string;
 using std::vector;
@@ -21,6 +22,11 @@ public:
 
     int romanToInt(string s)
     {
+        if (s.size() < 1 || s.size() > 15)
+            return 0;
+        if (eraseRomans(s) != "")
+            return 0;
+
         int res = 0;
 
         for (int i = 0; i < syms.size(); ++i)
@@ -39,7 +45,19 @@ public:
             }
         }
 
-        return res;
+        return res < 1 || res > 3999 ? 0 : res;
+    }
+
+    string eraseRomans(string str)
+    {
+        str.erase(std::remove(str.begin(), str.end(), 'I'), str.end());
+        str.erase(std::remove(str.begin(), str.end(), 'V'), str.end());
+        str.erase(std::remove(str.begin(), str.end(), 'X'), str.end());
+        str.erase(std::remove(str.begin(), str.end(), 'L'), str.end());
+        str.erase(std::remove(str.begin(), str.end(), 'C'), str.end());
+        str.erase(std::remove(str.begin(), str.end(), 'D'), str.end());
+        str.erase(std::remove(str.begin(), str.end(), 'M'), str.end());
+        return str;
     }
 };
 
