@@ -14,16 +14,12 @@ public:
 
 		int n = nums.size();
 		vector<vector<int>> resVec{};
-
-		if (n < 0 || n > 3000)
-			return resVec;
-		for (int num : nums)
-			if (num < -pow(10, 5) || num > pow(10, 5))
-				return resVec;
-
 		std::sort(nums.begin(), nums.end());
 
-		for (int i = 0; i < n - 2; ++i)
+		if (n < 3 || n > 3000 || nums[0] > 0)
+			return resVec;
+
+		for (int i = 0; i < n - 2 && nums[0] <= 0; ++i)
 		{
 			int target = nums[0];
 			nums.erase(nums.begin());
