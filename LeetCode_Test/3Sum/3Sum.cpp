@@ -1,73 +1,59 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <unordered_map>
 
 using std::vector;
 using std::cout;
 using std::endl;
-using iimap = std::unordered_map<int, int>;
 
 class Solution {
 public:
-	vector<vector<int>> threeSum(vector<int>& nums) {
+	vector<vector<int> > threeSum(vector<int>& num) {
 
-		int n = nums.size();
-		vector<vector<int>> resVec{};
-		std::sort(nums.begin(), nums.end());
+		vector<vector<int> > res;
+		int n = num.size();
+		std::sort(num.begin(), num.end());
 
-		if (n < 3 || n > 3000 || nums[0] > 0)
-			return resVec;
+		for (int i = 0; i < n - 2; i++) {
 
-		for (int i = 0; i < n - 2 && nums[0] <= 0; ++i)
-		{
-			int target = nums[0];
-			nums.erase(nums.begin());
-			vector<vector<int>> twoOfThrees = twoSum(nums, -target);
+			int target = -num[i];
+			int front = i + 1;
+			int back = n - 1;
 
-			for (int j = 0; j < twoOfThrees.size(); ++j)
-			{
-				twoOfThrees[j].insert(twoOfThrees[j].begin(), target);
-				if (isContain(resVec, twoOfThrees[j]))
-					continue;
-				resVec.push_back(twoOfThrees[j]);
-			}
-		}
+			while (front < back) {
 
-		return resVec;
-	}
+				int sum = num[front] + num[back];
 
-	vector<vector<int>> twoSum(vector<int>& nums, int target)
-	{
-		int length = nums.size();
-		iimap prevHash{};
-		vector<vector<int>> resVec;
+				// Finding answer which start from number num[i]
+				if (sum < target)
+					front++;
 
-		for (int i = 0; i < length; ++i)
-		{
-			vector<int> res{};
-			auto iter = prevHash.find(target - nums[i]);
+				else if (sum > target)
+					back--;
 
-			if (iter != prevHash.end())
-			{
-				res.push_back(iter->first);
-				res.push_back(nums[i]);
-				resVec.push_back(res);
+				else {
+					vector<int> triplet = { num[i], num[front], num[back] };
+					res.push_back(triplet);
+
+					// Processing duplicates of Number 2
+					// Rolling the front pointer to the next different number forwards
+					while (front < back && num[front] == triplet[1]) front++;
+
+					// Processing duplicates of Number 3
+					// Rolling the back pointer to the next different number backwards
+					while (front < back && num[back] == triplet[2]) back--;
+				}
+
 			}
 
-			prevHash.insert(std::make_pair(nums[i], i));
+			// Processing duplicates of Number 1
+			while (i + 1 < n && num[i + 1] == num[i])
+				i++;
+
 		}
 
-		return resVec;
-	}
+		return res;
 
-	template<typename T>
-	bool isContain(vector<T> objects, T object)
-	{
-		for (T v : objects)
-			if (v == object)
-				return true;
-		return false;
 	}
 };
 
@@ -94,7 +80,7 @@ void printResVec(vector<vector<int>> resVec)
 
 int main()
 {
-	vector<int> nums1{ -1, 0, 1, 2, -1, -4 };
+	vector<int> nums1{ -1, 0, 1, 2, -1, -4, 2 };
 	vector<int> nums2{ 13, -11, -14, 4, -9, -10, -11, 7, -14, -9, 14, 0, -5, -7, 6, -9, 11, 6, -14, -12, -10, 9, -8, -7, 5, 6, 8, -12, -1, -4, 14, -3, 0, 7, 9, 7, 12, 13, -9, 13, 11, -10, -10, -9, -10, 12, -10, 8, -5, 13, 11, -8, 7, -12, 0, -11, 2, -14, -8, 8, -3, 13, -9, 5, 5, 7, -11, -6, 5, -13, -7, 1, 14, -10, -1, -11, -13, 4, 12, -11, 2, 0, -4, -14, 4, 4, -10, 13, -3, -10, 6, 1, -12, 4, -9, 1, -4, -13, 10, 8, -11, 10, -14, -12, -14, 1, -8, 10, -10, 11, -15, 0, -3, -12, 1, -14, -1, -1, 6, 11, -4, -3, -2, -1, -13 };
 	vector<int> nums3{ 0 };
 	vector<int> nums4{ 0, 0, 0, 0 };
