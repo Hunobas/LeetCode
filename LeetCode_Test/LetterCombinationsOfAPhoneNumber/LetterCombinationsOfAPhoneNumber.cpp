@@ -40,13 +40,11 @@ public:
 			table.push_back(letterPad.find(digits[i])->second);
 
 		vector<string> resVec{};
-		string res = "";
-
-		recurseStrVec(resVec, res, table);
+		recurseStrVec(resVec, table);
 		return resVec;
 	}
 
-	void recurseStrVec(vector<string>& resVec, string& res, vector<string> table, int length = 0)
+	void recurseStrVec(vector<string>& resVec, vector<string> table, string res = "", int length = 0)
 	{
 		if (table.begin() + length == table.end())
 		{
@@ -57,7 +55,7 @@ public:
 		for (int i = 0; i < table[length].size(); ++i)
 		{
 			res.push_back(table[length][i]);
-			recurseStrVec(resVec, res, table, length + 1);
+			recurseStrVec(resVec, table, res, length + 1);
 			res.pop_back();
 		}
 	}
