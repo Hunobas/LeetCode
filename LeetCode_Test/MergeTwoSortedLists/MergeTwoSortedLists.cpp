@@ -24,40 +24,26 @@ public:
 			return list1;
 
 		ListNode *head1 = list1, *head2 = list2;
-		ListNode* resHead = nullptr;
-		if (head1->val <= head2->val)
-		{
-			resHead = new ListNode(head1->val);
-			head1 = head1->next;
-		}
-		else
-		{
-			resHead = new ListNode(head2->val);
-			head2 = head2->next;
-		}
-		ListNode* res = resHead;
+		ListNode dummy(INT_MIN);
+		ListNode* tail = &dummy;
 
 		while (head1 && head2)
 		{
-			ListNode* temp = nullptr;
 			if (head1->val <= head2->val)
 			{
-				temp = new ListNode(head1->val);
-				resHead->next = temp;
-				resHead = temp;
+				tail->next = head1;
 				head1 = head1->next;
 			}
 			else
 			{
-				temp = new ListNode(head2->val);
-				resHead->next = temp;
-				resHead = temp;
+				tail->next = head2;
 				head2 = head2->next;
 			}
+			tail = tail->next;
 		}
 
-		resHead->next = head1 ? head1 : head2;
-		return res;
+		tail->next = head1 ? head1 : head2;
+		return dummy.next;
 	}
 };
 
