@@ -11,9 +11,6 @@ class Solution {
 public:
 	vector<string> generateParenthesis(int n) {
 
-		int openPar = 0;
-		int closPar = 0;
-		string parenthese = "()";
 		vector<string> resVec{};
 
 		/*for (int h = 0; h < 1; ++h)
@@ -47,27 +44,21 @@ public:
 			}
 		}*/
 
-		string res = "";
-		recurseGetnerate(resVec, res, n);
+		recurseGetnerate(resVec, n);
 
 		return resVec;
 	}
 
-	void recurseGetnerate(vector<string>& resVec, string& res, int n, int i = 1, int j = 0)
+	void recurseGetnerate(vector<string>& resVec, int n, string res = "", int m = 0)
 	{
-		if (i > n)
+		if (!n && !m)
 		{
-			res = res.insert(j, "()");
+			resVec.push_back(res);
 			return;
 		}
 
-		for (int k = 0; k < i; ++k)
-		{
-			if (k - j > 1)
-				return;
-
-			recurseGetnerate(resVec, res, n, i + 1, k);
-		}
+		if (m) { recurseGetnerate(resVec, n, res + ")", m - 1); }
+		if (n) { recurseGetnerate(resVec, n - 1, res + "(", m + 1); }
 	}
 };
 
@@ -88,7 +79,7 @@ int main()
 {
 	Solution sol;
 
-	vector<string> res1 = sol.generateParenthesis(4);
+	vector<string> res1 = sol.generateParenthesis(6);
 
 	printResVec(res1);
 
