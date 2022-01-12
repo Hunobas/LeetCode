@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using std::vector;
 using std::cout;
@@ -20,28 +21,43 @@ public:
         if (lists.empty())
             return nullptr;
 
-        ListNode res(INT_MIN);
-        ListNode* tail = &res;
-        vector<ListNode*> done(lists.size(), nullptr);
-
-        while (lists != done)
+        while (lists.size() > 1)
         {
-            int i = 0;
-            int minVal = INT_MAX;
-
-            for (int j = 0; j < lists.size(); ++j)
-                if (lists[j] != nullptr && minVal > lists[j]->val)
-                {
-                    i = j;
-                    minVal = lists[j]->val;
-                }
-
-            tail->next = lists[i];
-            tail = tail->next;
-            lists[i] = lists[i]->next;
+            lists[0] = mergeTwoLists(lists[0], lists[1]);
+            lists.erase(lists.begin() + 1);
         }
 
-        return res.next;
+        return lists[0];
+    }
+
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2)
+    {
+        if (!list1)
+            return list2;
+        else if (!list2)
+            return list1;
+
+        ListNode* head1 = list1, * head2 = list2;
+        ListNode dummy(INT_MIN);
+        ListNode* tail = &dummy;
+
+        while (head1 && head2)
+        {
+            if (head1->val <= head2->val)
+            {
+                tail->next = head1;
+                head1 = head1->next;
+            }
+            else
+            {
+                tail->next = head2;
+                head2 = head2->next;
+            }
+            tail = tail->next;
+        }
+
+        tail->next = head1 ? head1 : head2;
+        return dummy.next;
     }
 };
 
