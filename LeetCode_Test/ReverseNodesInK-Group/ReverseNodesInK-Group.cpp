@@ -16,26 +16,26 @@ struct ListNode {
 
 class Solution {
 public:
-    ListNode* swapPairs(ListNode* head)
+    ListNode* reverseKGroup(ListNode* head, int k)
     {
         vector<int> nodeVec = convertToVec(head);
         int n = nodeVec.size();
 
-        if (n < 2)
-            return head;
-        if (n > 100)
+        if (n < k || n > 5000)
             return nullptr;
 
         ListNode* newHead = nullptr;
 
-        if (n % 2 == 1)
-            newHead = new ListNode(nodeVec[n - 1]);
-
-        for (int i = n / 2 - 1; i >= 0; --i)
+        if (n % k != 0)
         {
-            newHead = new ListNode(nodeVec[2 * i], newHead);
-            newHead = new ListNode(nodeVec[2 * i + 1], newHead);
+            for (int i = 0; i < k * (n / k); ++i)
+                head = head->next;
+            newHead = head;
         }
+
+        for (int i = n / k - 1; i >= 0; --i)
+            for (int j = 0; j < k; ++j)
+                newHead = new ListNode(nodeVec[k * i + j], newHead);
 
         return newHead;
     }
@@ -87,13 +87,15 @@ int main()
     vector<int> vec4{ 1 };
 
     Solution sol;
-    ListNode* res1 = sol.swapPairs(makeListNode(vec1));
-    ListNode* res2 = sol.swapPairs(makeListNode(vec2));
-    ListNode* res3 = sol.swapPairs(makeListNode(vec3));
-    ListNode* res4 = sol.swapPairs(makeListNode(vec4));
+    ListNode* res1 = sol.reverseKGroup(makeListNode(vec1), 2);
+    ListNode* res2 = sol.reverseKGroup(makeListNode(vec2), 2);
+    ListNode* res3 = sol.reverseKGroup(makeListNode(vec3), 2);
+    ListNode* res4 = sol.reverseKGroup(makeListNode(vec4), 2);
+    ListNode* res5 = sol.reverseKGroup(makeListNode(vec2), 3);
 
     printListNode(res1);
     printListNode(res2);
     printListNode(res3);
     printListNode(res4);
+    printListNode(res5);
 }
