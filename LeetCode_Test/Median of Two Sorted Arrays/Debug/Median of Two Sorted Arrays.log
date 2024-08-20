@@ -1,3 +1,0 @@
-﻿  MedianOfTwoSortedArrays.cpp
-D:\Program Files\Git\LeetCode\LeetCode_Test\Median of Two Sorted Arrays\MedianOfTwoSortedArrays.cpp(34,25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  Median of Two Sorted Arrays.vcxproj -> D:\Program Files\Git\LeetCode\LeetCode_Test\Debug\MedianOfTwoSortedArrays.exe

@@ -1,3 +1,6 @@
 *
 !*.cpp
 !.gitignore
+*.tlog
+*.log
+*.pdb
